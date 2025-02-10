@@ -33,4 +33,14 @@ class LogController extends Controller
         $pdf = PDF::loadView('reports.attendance', compact('logs'));
         return $pdf->download('attendance_report.pdf');
     }
+
+    public function generatePDF()
+    {
+        $logs = StudentAttendance::join('students', 'students.s_rfid', '=', 'student_attendances.student_rfid')
+            ->join('events', 'events.id', '=', 'student_attendances.event_id')
+            ->get();
+
+        $pdf = PDF::loadView('reports.attendance', compact('logs'));
+        return $pdf->download('attendance_report.pdf');
+    }
 }
