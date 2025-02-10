@@ -23,5 +23,9 @@ class DatabaseSeeder extends Seeder
             'password' => '123',
             'admin_email' => 'test@example.com',
         ]);
+
+        $this->call([
+            FineSettingsSeeder::class
+        ]);
     }
 }

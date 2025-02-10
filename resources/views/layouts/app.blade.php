@@ -14,12 +14,13 @@
 
     <!-- Scripts -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
 <body class="font-sans antialiased bg-gradient-to-r from-purple-500 to-indigo-900" onload="startTime()">
-    <div class="min-h-full">
+    <div class="min-h-full w-full">
         <!-- Navigation Bar -->
-        <nav class="bg-violet-800 w-100">
+        <nav class="bg-violet-800 w-full fixed top-0 right-0 left-0">
             <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
                 <div class="flex h-16 items-center justify-between">
                     <div class="flex items-center">
@@ -108,10 +109,10 @@
         </nav>
 
         <!-- Main Content -->
-        <fieldset class="border-4 rounded-md border-indigo-900 min-h-dvh m-2 bg-gray-200 p-2">
+        <fieldset class="border-4 rounded-md border-indigo-900 min-h-dvh mt-[5em] bg-gray-200 p-2">
             <legend
                 class="text-center rounded-xl text-3xl text-gray-100 bg-violet-700 font-extrabold border-4 border-indigo-900 py-2 px-8">
-                Attendance Management System
+                RFID Attendance Management System
             </legend>
 
             <img src="{{ asset('images/logos/fox.png') }}" alt=""

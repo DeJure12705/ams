@@ -1,31 +1,24 @@
 <x-guest-layout>
     @if (session('admin_code_verified'))
-    
-    @endif
-        <!-- Session Status -->
-        <x-auth-session-status class="mb-4" :status="session('status')" />
-        <!-- Left Column: Takes up 2/3 of the width on medium screens and larger -->
-        <div class="md:basis-2/3 lg:basis-7/12 flex flex-col items-center justify-center space-y-4">
-            <!-- Images stacked on top of each other -->
-            <div class="flex gap-3">
-                <img src="{{ asset('images/logos/IC.svg') }}" alt="Logo 1" class="w-32 md:w-40 lg:w-44 drop-shadow-lg">
-                <img src="{{ asset('images/logos/ICSA.svg') }}" alt="Logo 2" class="w-32 md:w-40 lg:w-44 drop-shadow-lg">
-            </div>
-            
-            <!-- Text below the images -->
-            <h1 class="text-3xl md:text-5xl lg:text-8xl font-extrabold text-center drop-shadow-2xl">
-                <span class="text-yellow-400">Attendance</span> 
-                <span class="text-white">Management</span> 
-                <span class="text-yellow-400">System</span>
-            </h1>
-    
+    <!-- Left Column: Takes up 2/3 of the width on medium screens and larger -->
+    <div class="md:basis-2/3 lg:basis-7/12 flex flex-col items-center justify-center space-y-4">
+        <!-- Images stacked on top of each other -->
+        <div class="flex gap-3">
+            <img src="{{ asset('images/logos/IC.svg') }}" alt="Logo 1" class="w-32 md:w-40 lg:w-44 drop-shadow-lg">
+            <img src="{{ asset('images/logos/ICSA.svg') }}" alt="Logo 2" class="w-32 md:w-40 lg:w-44 drop-shadow-lg">
         </div>
-
-
+        
+        <!-- Text below the images -->
+        <h1 class="text-3xl md:text-5xl lg:text-8xl font-extrabold text-center drop-shadow-2xl">
+            <span class="text-yellow-400">Attendance</span> 
+            <span class="text-white">Management</span> 
+            <span class="text-yellow-400">System</span>
+        </h1>
+        <span class="text-gray-300 italic">© 2025 DNSC Codex. All Rights Reserved</span>
+    </div>
 
     <!-- Right Column: Takes up 1/3 of the width on medium screens and larger -->
-    <div
-        class="md:basis-1/3 lg:basis-5/12 border-4 border-purple-900 md:border md:border-purple-900 lg:border-t-4 lg:border-b-4 lg:border-l-4 lg:border-r-0 bg-white p-6 py-12 rounded-xl md:rounded-l-3xl md:rounded-r-none shadow-md">
+    <div class="md:basis-1/3 lg:basis-5/12 border-4 border-purple-900 md:border md:border-purple-900 lg:border-t-4 lg:border-b-4 lg:border-l-4 lg:border-r-0 bg-white p-6 py-12 rounded-xl md:rounded-l-3xl md:rounded-r-none shadow-md">
         <h1 class="text-3xl font-semibold text-center pb-14 text-purple-800">Register as Admin</h1>
         <form method="POST" action="{{ route('register') }}">
             @csrf
@@ -82,7 +75,7 @@
             </div>
 
             <div class="flex items-center justify-end mt-6">
-                <x-primary-button class="ms-4">
+                <x-primary-button class="ms-4 w-full">
                     {{ __('Register') }}
                 </x-primary-button>
             </div>
@@ -100,4 +93,5 @@
             </div>
         </form>
     </div>
+    @endif
 </x-guest-layout>

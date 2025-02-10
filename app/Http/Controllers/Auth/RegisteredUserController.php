@@ -42,6 +42,7 @@ class RegisteredUserController extends Controller
             'admin_lname' => $request->admin_lname,
             'admin_uname' => $request->admin_uname,
             'admin_email' => $request->admin_email,
+            'admin_type' => 'admin', // Set default admin type
             'password' => Hash::make($request->password),
         ]);
     

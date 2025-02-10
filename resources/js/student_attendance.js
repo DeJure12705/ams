@@ -7,22 +7,16 @@ let attendanceStart = false;
 
 const form = document.getElementById('attendanceForm');
 
-function post(form){
-    console.log('working')
+async function post(form){
     let isRecorded = false;
-    axios.post(form.get('uri'), form, {
+    const response = await axios.post(form.get('uri'), form, {
         headers: {
             'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
             'Content-Type': 'application/json'
         }
-    })
-    .then(response => {
-        console.log("Response",response.data);
-        isRecorded = true;
-    })
-    .catch(error =>{
-        console.log("Error:", error)
     });
+    document.querySelector('#inputField').value = "";
+
 
     return isRecorded;
 }
@@ -33,24 +27,17 @@ function post(form){
     event.preventDefault();
    let isRecorded = post(new FormData(event.target));
     // notify(isRecorded, "")
-    // let isFetch = setTimeout(get(), 500);
+    let isFetch = setTimeout(get(), 500);
     // notify(isFetch, "")
 });
 
 // LOAD THE TABLE => GET
-function get(){
+async function get(){
     let uri = document.getElementById('getURI').value
     let isFetch = false
-    axios.get(uri)
-    .then( response => {
-        console.log("Response",response);
-        isFetch = true;
-    })
-    .catch(error=>{
-        console.log("Error:", error)
-    });
+   const data= await axios.get(uri)
 
-    return isFetch;
+    return data;
 }
 
 // FOR NOTIFICATIONS ETC
@@ -62,5 +49,10 @@ function notify(status, content){
 function error(status, content){
 
 }
+
+setInterval( ()=>{
+    document.querySelector('#inputField').focus()
+    console.log('hello world ')
+}, 500)
 
 

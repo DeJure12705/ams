@@ -7,15 +7,32 @@ use Illuminate\Database\Eloquent\Model;
 
 class Fine extends Model
 {
-    /** @use HasFactory<\Database\Factories\FineFactory> */
     use HasFactory;
 
     protected $fillable = [
-        "attendance_id",
-        "fines",
-        "morning_checkIn",
-        "morning_checkOut",
-        "afternoon_checkIn",
-        "afternoon_checkOut",
+        'attendance_id',
+        'event_id',
+        'student_rfid',
+        'fine_amount',
+        'morning_checkIn_missed',
+        'morning_checkOut_missed', 
+        'afternoon_checkIn_missed',
+        'afternoon_checkOut_missed',
+        'total_fines'
     ];
+
+    public function student()
+    {
+        return $this->belongsTo(Student::class, 'student_rfid', 's_rfid');
+    }
+
+    public function attendance()
+    {
+        return $this->belongsTo(StudentAttendance::class);
+    }
+
+    public function event()
+    {
+        return $this->belongsTo(Event::class);
+    }
 }

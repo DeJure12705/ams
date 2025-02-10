@@ -23,7 +23,7 @@ return new class extends Migration
             $table->string('s_lvl');
             $table->string('s_set');
             $table->string('s_image')->nullable();
-            $table->enum('s_status', ['ENROLLED', 'DROPPED', 'GRADUATED'])->default('ENROLLED');
+            $table->enum('s_status', ['ENROLLED', 'DROPPED', 'GRADUATED', 'TO BE UPDATED'])->default('TO BE UPDATED');
 
             $table->timestamps();
         });

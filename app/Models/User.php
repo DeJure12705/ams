@@ -21,7 +21,7 @@ class User extends Authenticatable
         'admin_fname',
         'admin_lname',
         'admin_uname',
-        "admin_type",
+        'admin_type',
         'admin_email',
         'password',
     ];

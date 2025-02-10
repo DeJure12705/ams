@@ -11,11 +11,13 @@
             <img src="{{ asset('images/logos/ICSA.svg') }}" alt="Logo 2" class="w-32 md:w-40 lg:w-44 drop-shadow-lg">
         </div>
 
+
         <h1 class="text-3xl md:text-5xl lg:text-8xl font-extrabold text-center drop-shadow-2xl">
             <span class="text-yellow-400">Attendance</span>
             <span class="text-white">Management</span>
             <span class="text-yellow-400">System</span>
         </h1>
+        <span class="text-gray-300 italic">© 2025 DNSC Codex. All Rights Reserved</span>
     </div>
     <!-- Right Column: Takes up 1/3 of the width on medium screens and larger -->
     <div
@@ -67,7 +69,7 @@
             </div>
         </form>
         <div class="flex justify-center mt-5">
-            Don't have an account? <a href="{{ route('register') }}" class="text-blue-700 ml-1"> Create
+            Don't have an account? <a href="{{ route('admin.code') }}" class="text-blue-700 ml-1"> Create
                 Account</a>
 
         </div>

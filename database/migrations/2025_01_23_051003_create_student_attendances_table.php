@@ -13,17 +13,22 @@ return new class extends Migration
     {
         Schema::create('student_attendances', function (Blueprint $table) {
             $table->id();
-            $table->enum('attend_checkIn', ['true', 'false'])->default('false');
-            $table->enum('attend_checkOut', ['true', 'false'])->default('false');
+            // Morning attendance
+            $table->time('attend_checkIn')->nullable();
+            $table->time('attend_checkOut')->nullable();
+            // Afternoon attendance
+            $table->time('attend_afternoon_checkIn')->nullable();
+            $table->time('attend_afternoon_checkOut')->nullable();
             $table->string('event_id');
             $table->string('student_rfid');
-            $table->enum('didCheckIn', ['true', 'false'])->default('false');
+            $table->boolean('morning_attendance')->default(false);
+            $table->boolean('afternoon_attendance')->default(false);
             $table->timestamps();
         });
     }
 
     /**
-     * Reverse the migrations.
+     * Reverse the migrations. 
      */
     public function down(): void
     {

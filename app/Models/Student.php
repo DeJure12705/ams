@@ -23,4 +23,14 @@ class Student extends Model
         "s_image",
         "s_status",
     ];
+
+    public function fines()
+    {
+        return $this->hasMany(Fine::class)->orderBy('created_at', 'desc');
+    }
+
+    public function getTotalFinesAttribute()
+    {
+        return $this->fines->sum('total_fines');
+    }
 }

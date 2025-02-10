@@ -13,6 +13,7 @@
             <span class="text-white">Management</span> 
             <span class="text-yellow-400">System</span>
         </h1>
+        <span class="text-gray-300 italic">© 2025 DNSC Codex. All Rights Reserved</span>
     </div>
     
     <!-- Right Column: Takes up 1/3 of the width on medium screens and larger -->

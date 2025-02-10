@@ -13,8 +13,16 @@ class StudentAttendance extends Model
     protected $fillable = [
         "attend_checkIn",
         "attend_checkOut",
+        "attend_afternoon_checkIn",
+        "attend_afternoon_checkOut",
         "event_id",
         "student_rfid",
-        "didCheckIn"
+        "morning_attendance",
+        "afternoon_attendance"
+    ];
+
+    protected $casts = [
+        'morning_attendance' => 'boolean',
+        'afternoon_attendance' => 'boolean'
     ];
 }

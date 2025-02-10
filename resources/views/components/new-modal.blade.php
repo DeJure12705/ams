@@ -1,6 +1,6 @@
-<div x-data="{ open: false }" class="transition-all">
+<div x-data="{ open: false }" class="transition-all flex justify-end">
     <button x-on:click="open = ! open"
-        class="transition-colors hover:bg-violet-800 bg-violet-600 text-white rounded-xl px-5 text-2xl">
+        class="transition-colors hover:bg-violet-800 ease-linear transform-all bg-violet-600 text-white rounded-xl px-5 text-2xl">
         {{ $button }}
     </button>
 
