@@ -24,7 +24,7 @@
                                 });
                             });
                         </script>
-                        <span class="text-red-600">  
+                        <span class="text-red-600">
                             There are no event details yet
                         </span>
                     @endif
@@ -61,7 +61,7 @@
                                 </span>
                             </h2>
                         </div>
-                        
+
                     </div>
                     <h2 class="text-sm font-bold text-gray-800 py-3">
                         Date Created:
@@ -77,10 +77,16 @@
             @if ($event)
                 <div x-data="{ play: false }" class="flex">
                     <div x-data="{ open: false }" class="transition-all">
-                        <button x-on:click="open = ! open" onclick="myFunction()"
+                        <div class="flex-col justify-end">
+                            <button x-on:click="open = ! open" onclick="myFunction()"
+                            class="bg-orange-500 px-3 py-2 mb-2 hover:bg-orange-600 transition-full max-w-xs text-center rounded-xl text-white shadow-lg">
+                            Enter Student ID:
+                        </button>
+                        <button onclick="startInterval()"
                             class="bg-orange-500 px-3 py-2 mb-2 hover:bg-orange-600 transition-full max-w-xs text-center rounded-xl text-white shadow-lg">
                             Start Attendance
                         </button>
+                        </div>
 
                         <div x-show.important="open"
                             class="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
@@ -92,13 +98,13 @@
                                     </h1>
                                 </div>
                                 <div class="mb-5">
-                                    <form id="attendanceForm" method="POST">
+                                    <form id="attendanceForm" method="POST" action="{{route('attendanceStudent')}}">
                                         @csrf
                                         <input type="hidden" name="event_id" value="{{ $event->id }}">
                                         <input type="hidden" name="uri" value="{{ route('attendanceStudent') }}">
                                         <div class="flex flex-col">
                                             <label class="text-lg font-semibold" for="">Enter RFID:</label>
-                                            <input type="text" name="s_rfid" id="inputField">
+                                            <input type="text" name="s_rfid" id="inputField" autocomplete="off">
                                         </div>
                                     </form>
                                 </div>
@@ -118,7 +124,6 @@
 
         </div>
     </x-slot>
-
 
     <div class="mt-4">
         <div class="flex justify-between">
@@ -145,16 +150,17 @@
                     @isset($students)
                         @foreach ($students as $student)
                             <tr>
-                                <td>{{ $student->s_fname }}</td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
+                                <td>{{ $student->s_fname . " ". $student->s_lname }} </td>
+                                <td>{{$student->s_program}}</td>
+                                <td>{{$student->s_set}}</td>
+                                <td>{{$student->s_lvl}}</td>
+                                <td>{{$student->attend_checkIn}}</td>
+                                <td>{{$student->attend_checkOut}}</td>
+                                <td>{{$student->created_at}}</td>
                             </tr>
                         @endforeach
                     @endisset
-    
+
                 </tbody>
             </table>
         </div>
@@ -163,6 +169,16 @@
     <form id="getAttendanceForm" hidden>
         <input type="text" id="getURI" value="{{ route('getAttendanceRecent') }}" hidden>
     </form>
+
+    @if ($event)
+            {{-- FOR AUTO ATTENDANCE --}}
+    <form id="auto_attendanceForm" method="POST" class="fixed -z-10">
+        @csrf
+        <input type="hidden" name="event_id" value="{{ $event->id }}">
+        <input type="hidden" name="uri" value="{{ route('attendanceStudent') }}">
+        <input type="text" name="s_rfid" id="inputField1" class="bg-transparent border-none" autocomplete="off">
+    </form>
+    @endif
 
 </x-app-layout>
 <script>
@@ -182,6 +198,8 @@
             showConfirmButton: false,
             timer: 1000
         });
+
+        stopInterval();
     }
 
     function stopAttendance() {
@@ -193,5 +211,8 @@
             showConfirmButton: false,
             timer: 1000
         });
+
+        startInterval();
     }
+
 </script>

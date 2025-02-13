@@ -26,11 +26,12 @@ class ImportController extends Controller
 
             return redirect()->back()->with('success', "Data Imported Successfully");
         } catch (Throwable $error) {
-            dd($error);
             if ($error->getCode() == 23000) { //23000 is Integrity Constraint error
-                return redirect()->back()->with('error', 'Duplicate Entries not allowed'); //For Duplicate Entries
+                // dd($error);
+                return redirect()->back()->with('error', $error->getMessage()); //For Duplicate Entries
+            }else{
+                return redirect()->back()->with('error', $error->getMessage());
             }
-            return redirect()->back()->with('error', $error->getMessage());
         }
     }
 }

@@ -12,11 +12,26 @@ class FineController extends Controller
 {
     private const FINE_AMOUNT = 25.00;
 
+    public function view(){
+        $logs = StudentAttendance::join('students', 'students.s_rfid', '=', 'student_attendances.student_rfid')
+        ->join('events', 'events.id', '=', 'student_attendances.event_id')
+        ->get();
+
+    // Get fines with related student and event data
+    $fines = Fine::with(['student', 'event'])
+        ->orderBy('created_at', 'desc')
+        ->get();
+
+
+    $events = Event::select('*')->orderBy('created_at')->get();
+        return view('pages.fines', compact('logs', 'fines', 'events'));
+    }
+
     public function calculateEventFines(Event $event)
     {
         // Get all enrolled students
         $allStudents = Student::where('s_status', 'ENROLLED')->get();
-        
+
         foreach ($allStudents as $student) {
             // Check if student has attendance record for this event
             $attendance = StudentAttendance::where('event_id', $event->id)
@@ -26,7 +41,7 @@ class FineController extends Controller
             // Calculate missed actions and fines
             $missedActions = $this->calculateMissedActions($attendance);
             $missedCount = array_sum(array_map(fn($v) => $v ? 1 : 0, $missedActions));
-            
+
             if ($missedCount > 0) {
                 $totalFines = $missedCount * self::FINE_AMOUNT;
 

@@ -23,6 +23,7 @@ function updateStudent(data) {
     document.getElementById("s_ID").value = data.id;
 }
 function deleteStudent(data) {
+    console.log(data);
     Swal.fire({
         title: "Chotto Matte Kudasai!!!",
         html: `
@@ -127,7 +128,9 @@ async function getCategory() {
     <td class="flex gap-3 py-3">
         <button
             class='text-white bg-gradient-to-br from-purple-600 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2'
-            x-on:click="open = true" onclick="updateStudent(${e})">
+            x-on:click="open = true" onclick='updateStudent(${JSON.stringify(
+                e
+            )})'>
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                 stroke="currentColor" class="size-6">
                 <path stroke-linecap="round" stroke-linejoin="round"
@@ -136,7 +139,7 @@ async function getCategory() {
         </button>
         <button
             class='text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2'
-            onclick="deleteStudent(${e})">
+            onclick='deleteStudent(${JSON.stringify(e)})'>
 
 
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
@@ -187,13 +190,12 @@ function selectAll() {
         rows.forEach((e) => {
             e.classList.add("selected", "bg-green-400");
         });
-        document.querySelector("#selectAllBtn").innerHTML = 
-            `
+        document.querySelector("#selectAllBtn").innerHTML = `
             <div class="flex gap-3">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M6.429 9.75 2.25 12l4.179 2.25m0-4.5 5.571 3 5.571-3m-11.142 0L2.25 7.5 12 2.25l9.75 5.25-4.179 2.25m0 0L21.75 12l-4.179 2.25m0 0 4.179 2.25L12 21.75 2.25 16.5l4.179-2.25m11.142 0-5.571 3-5.571-3" />
                 </svg>
-                    
+
                 Deselect All
             </div>
             `;
@@ -202,13 +204,12 @@ function selectAll() {
     rows.forEach((e) => {
         e.classList.remove("selected", "bg-green-400");
     });
-    document.querySelector("#selectAllBtn").innerHTML = 
-            `
+    document.querySelector("#selectAllBtn").innerHTML = `
             <div class="flex gap-3">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M6.429 9.75 2.25 12l4.179 2.25m0-4.5 5.571 3 5.571-3m-11.142 0L2.25 7.5 12 2.25l9.75 5.25-4.179 2.25m0 0L21.75 12l-4.179 2.25m0 0 4.179 2.25L12 21.75 2.25 16.5l4.179-2.25m11.142 0-5.571 3-5.571-3" />
                 </svg>
-                    
+
                 Select All
             </div>
             `;
@@ -244,13 +245,13 @@ async function deleteSelectedRows() {
     }).then((result) => {
         if (result.isConfirmed) {
             const field = document.querySelector("#_selected_students_delete");
-            const selected = Array.from(document.querySelectorAll(".selected")).map(
-                (e) => e.id
-            );
-        
+            const selected = Array.from(
+                document.querySelectorAll(".selected")
+            ).map((e) => e.id);
+
             field.value = selected;
-        
-            document.querySelector("#_selected_delete_form").submit();       
+
+            document.querySelector("#_selected_delete_form").submit();
         }
     });
 }
@@ -274,7 +275,9 @@ async function search(uri, data) {
     if (students) {
         console.log(students);
         students.forEach((e) => {
-            table.innerHTML += ` <tr class="table_row" id="${e.id}">
+            const data = JSON.stringify(e);
+            table.innerHTML +=
+                ` <tr class="table_row" id="${e.id}">
     <td>${e.s_studentID}</td>
     <td>${e.s_fname}</td>
     <td>${e.s_lname}</td>
@@ -285,9 +288,12 @@ async function search(uri, data) {
     <td>${e.s_program}</td>
     <td>${e.s_status}</td>
     <td class="flex gap-3 py-3">
+
         <button
             class='text-white bg-gradient-to-br from-purple-600 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2'
-            x-on:click="open = true" onclick="updateStudent(${e})">
+            x-on:click="open = true" onclick='updateStudent( ` +
+                data +
+                `)'>
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                 stroke="currentColor" class="size-6">
                 <path stroke-linecap="round" stroke-linejoin="round"
@@ -296,7 +302,7 @@ async function search(uri, data) {
         </button>
         <button
             class='text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2'
-            onclick="deleteStudent(${e})">
+            onclick='deleteStudent(${JSON.stringify(e)})'>
 
 
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"

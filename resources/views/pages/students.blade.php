@@ -39,8 +39,20 @@
             document.addEventListener("DOMContentLoaded", function() {
                 Swal.fire({
                     icon: 'error',
-                    title: 'Error!',
-                    text: '{{ session('error') }}',
+                    title: 'Oops!',
+                    html: 
+                    '<h2 class="text-lg font-semibold text-red-600">An Error Occurred!</h2><br>' +
+                      '<div class="w-full max-w-md mx-auto">' +
+                          '<div class="">' +
+                              '<button onclick="toggleAccordion()" class="text-red-700 hover:text-white border border-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">' +
+                                  'View Details' +
+                              '</button>' +
+                              '<div id="errorDetails" class="hidden p-4 bg-red-100 border-t border-gray-300 rounded-lg">' +
+                                  '<strong>Full Details:</strong>' +
+                                  '<p class="text-sm text-red-700">{{ session('error') }}</p>' +
+                              '</div>' +
+                          '</div>' +
+                      '</div>',         
                     showConfirmButton: true,
                 });
             });
@@ -623,6 +635,12 @@
                 importBtn.classList.remove('hidden'); //Show the import button
                 console.log('File Upload: ' + fileName);
             }
+        }
+
+        // Accordion for Error Details
+        function toggleAccordion() {
+            let details = document.getElementById("errorDetails");
+            details.classList.toggle("hidden");
         }
     </script>
 

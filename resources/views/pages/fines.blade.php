@@ -1,9 +1,9 @@
 <x-app-layout>
 
-    @vite(['resources/js/logs.js'])
+    @vite(['resources/js/fines.js'])
     <x-slot name="header">
         <h2 class="font-semibold text-3xl text-violet-800 leading-tight">
-            {{ __('Activity Reports') }}
+            {{ __('Fines Reports') }}
         </h2>
     </x-slot>
 

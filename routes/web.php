@@ -10,6 +10,7 @@ use App\Http\Controllers\StudentController;
 use App\Models\StudentAttendance;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\AdminCodeController;
+use App\Http\Controllers\FineController;
 use App\Http\Controllers\ImportController;
 use App\Http\Resources\Attendance;
 use App\Models\User;
@@ -48,8 +49,11 @@ Route::middleware('auth')->group(function () {
 
     // LOGS RELATED ROUTES
     Route::get('/logs', [LogController::class, 'viewLogs'])->name('logs');
-    Route::get('/logs/generate-pdf', [LogController::class, 'generatePDF'])->name('logs.pdf');
+    Route::post('/logs/export-file', [LogController::class, 'exportFile'])->name('logs.export');
     Route::post('/logs/clear-fines', [LogController::class, 'clearFines'])->name('logs.clear-fines');
+
+    // STUDENT LOGS - API => VIA CATEGORY
+    Route::get('/logs/category', [LogController::class, 'filterByCategory'])->name('fetchViaCategory');
 
     // STUDENT RELATED ROUTES
     Route::post('/addStudent', [StudentController::class, 'create'])->name('addStudent');
@@ -85,6 +89,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/import-student', [ImportController::class, 'import'])->name('importStudent');
 
     // Fine Settings Routes
+    Route::get('/fines', [FineController::class, 'view'])->name('fines.view');
     Route::put('/fines/settings', [FinesController::class, 'updateSettings'])->name('fines.settings.update');
 });
 

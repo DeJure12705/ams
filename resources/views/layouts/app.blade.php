@@ -36,7 +36,9 @@
                                 <div class="font-black">
                                     <x-nav-link href="{{ route('logs') }}" :active="request()->routeIs('logs')">Logs</x-nav-link>
                                 </div>
-
+                                <div class="font-black">
+                                    <x-nav-link href="{{ route('fines.view') }}" :active="request()->routeIs('fines.view')">Fines</x-nav-link>
+                                </div>
                                 <div class="font-black">
                                     <x-nav-link href="{{ route('students') }}" :active="request()->routeIs('students')">Students</x-nav-link>
 
