@@ -15,6 +15,8 @@ export default defineConfig({
                 "resources/js/events.js",
                 "resources/css/welcome.css",
                 "resources/js/welcome.js",
+                "resources/js/logs.js",
+                "resources/js/fines.js",
             ],
             refresh: true,
         }),
