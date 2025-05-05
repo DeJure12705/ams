@@ -1,4 +1,8 @@
+import Alpine from "alpinejs";
 import axios from "axios";
+//Added testing function
+import { testStudentForm } from "./dashboard";
+window.testStudentForm = testStudentForm;
 
 const api = axios.create({
     headers: {
@@ -7,7 +11,7 @@ const api = axios.create({
     },
 });
 
-function updateStudent(data) {
+function updateStudent(data, image) {
     console.log(data);
     console.log(data.s_rfid);
     document.getElementById("s_RFID").value = data.s_rfid;
@@ -21,6 +25,8 @@ function updateStudent(data) {
     document.getElementById("s_LVL").value = data.s_lvl;
     document.getElementById("s_SET").value = data.s_set;
     document.getElementById("s_ID").value = data.id;
+    document.getElementById("uploadImage").src = image;
+    console.log(document.getElementById("uploadImage").src);
 }
 function deleteStudent(data) {
     console.log(data);
@@ -89,11 +95,15 @@ async function getCategory() {
     const set = document.querySelectorAll(
         '#search_set input[name="set"]:checked'
     );
+    const status = document.querySelectorAll(
+        '#search_status input[name="status"]:checked'
+    );
+
     let uri = baseUrl;
     const program_data = Array.from(program).map((cb) => cb.value);
     const lvl_data = Array.from(lvl).map((cb) => cb.value);
     const set_data = Array.from(set).map((cb) => cb.value);
-
+    const status_data = Array.from(status).map((cb) => cb.value);
     uri += "&&program=";
     program_data.forEach((element) => {
         uri += element + ",";
@@ -106,6 +116,11 @@ async function getCategory() {
     uri += "&&set=";
 
     set_data.forEach((element) => {
+        uri += element + ",";
+    });
+
+    uri += "&&status=";
+    status_data.forEach((element) => {
         uri += element + ",";
     });
     const data = await searchViaCategory(uri);
@@ -151,11 +166,8 @@ async function getCategory() {
     </td>
 </tr>`;
         });
-
+        document.getElementById("std_info_table").innerHTML = "";
         Array.from(table_row).forEach((element) => {
-            element.addEventListener("dblclick", (e) => {
-                console.log("Hello World");
-            });
             element.addEventListener("click", (e) => {
                 // element.classList.toggle('selected', 'bg-green-500', 'shadow-lg', 'shadow-green-800')
                 element.classList.toggle("selected");
@@ -165,7 +177,15 @@ async function getCategory() {
         });
     } else {
         document.getElementById("std_info_table").innerHTML = `
-<h3 class="text-center">No Student Found</h3>
+        <div class="flex justify-center items-center">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-6">
+                <path fill-rule="evenodd" d="M18.685 19.097A9.723 9.723 0 0 0 21.75 12c0-5.385-4.365-9.75-9.75-9.75S2.25 6.615 2.25 12a9.723 9.723 0 0 0 3.065 7.097A9.716 9.716 0 0 0 12 21.75a9.716 9.716 0 0 0 6.685-2.653Zm-12.54-1.285A7.486 7.486 0 0 1 12 15a7.486 7.486 0 0 1 5.855 2.812A8.224 8.224 0 0 1 12 20.25a8.224 8.224 0 0 1-5.855-2.438ZM15.75 9a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0Z" clip-rule="evenodd" />
+            </svg>
+            <h3 class="text-center font-bold text-lg py-5">
+                No Student Found
+            </h3>
+        </div>
+
 `;
     }
 }
@@ -258,7 +278,7 @@ async function deleteSelectedRows() {
 
 // AXIOS API
 async function search(uri, data) {
-    console.log("workinga");
+    console.log("Search is Working");
     uri = uri + "?search=" + data;
     const response = await axios.get(uri, {
         headers: {
@@ -313,6 +333,7 @@ async function search(uri, data) {
         </button>
     </td>
 </tr>`;
+            document.getElementById("std_info_table").style.display = "none"; //Line by Panzerweb: When search is empty, remove the span
         });
         Array.from(table_row).forEach((element) => {
             element.addEventListener("click", (e) => {
@@ -323,9 +344,11 @@ async function search(uri, data) {
             });
         });
     } else {
-        document.getElementById("std_info_table").innerHTML = `
-<h3 class="text-center">No Student Found</h3>
-`;
+        //Code by Panzerweb: If search does not match, display text 'No Student Found'
+        document.getElementById("std_info_table").style.display = "block";
+        document.getElementById(
+            "std_info_table"
+        ).innerHTML = `<h3 class="text-center tracking-wide text-gray-500 text-xl">No Student Found</h3>`;
     }
 }
 async function searchViaCategory(uri) {

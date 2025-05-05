@@ -66,15 +66,14 @@ Route::middleware('auth')->group(function () {
     // STUDENT - API => VIA SEARCHBAR
     Route::get('/students/filter', [StudentController::class, 'filter'])->name('fetchStudent');
 
-
     // STUDENT - API => VIA CATEGORY
     Route::get('/students/category', [StudentController::class, 'filterByCategory'])->name('fetchViaCategory');
 
     // ATTENDANCE RELATED ROUTES
     Route::get('/attendance', [StudentAttendanceController::class, 'view'])->name('attendance');
     Route::post('/student-attendance', [StudentAttendanceController::class, 'recordAttendance'])->name('attendanceStudent');
-    Route::get('/studentAttendace/recent', [StudentAttendance::class, 'recent'])->name('getAttendanceRecent');
-    // Route::post
+    Route::get('/studentAttendace/recent', [StudentAttendanceController::class, 'recent'])->name('getAttendanceRecent');
+    Route::get('/student_Attendance', [StudentAttendanceController::class, 'formatAttendance'])->name('try');    // Route::post
 
     // EVENTS RELATED ROUTES
     Route::post('/addEvent', [EventController::class, 'create'])->name('addEvent');
@@ -91,33 +90,11 @@ Route::middleware('auth')->group(function () {
     // Fine Settings Routes
     Route::get('/fines', [FineController::class, 'view'])->name('fines.view');
     Route::put('/fines/settings', [FinesController::class, 'updateSettings'])->name('fines.settings.update');
+    // FINES -> API => VIA CATEGORY
+    Route::get('/fines/category', [FinesController::class, 'filterByCategory'])->name('fetchViaCategory');
+    // FINES -> API => VIA SEARCHBAR
+    Route::get('/fines/filter', [FinesController::class, 'filter'])->name('fetchFines');
 });
 
 
 require __DIR__ . '/auth.php';
-
-
-
-// THE CODE BELOW IS USED FOR DEVELOPMENT AND TESTING  PURPOSES ONLY
-// API TESTING OR DEVELOPMENT
-Route::get('/api/test/1', function () {
-    $data = new Attendance(User::all());
-    return view('test.test_1', compact('data'));
-})->name('api_test_1');
-
-Route::get('/api/test/2', function () {
-    // $response = Http::get('https://jsonplaceholder.typicode.com/posts');
-    // $data = $response->json(); // Convert response to array
-    return response()->json([
-        "message" => "WOrking",
-    ]);
-});
-
-Route::post('/api/test/3', function (Request $request) {
-
-    return response()->json([
-        "message" => "POST created successfully",
-        "data" => $request->name
-
-    ]);
-})->name('postAPI');
