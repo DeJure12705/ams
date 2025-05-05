@@ -8,6 +8,9 @@ export default defineConfig({
                 "resources/css/app.css",
                 "resources/js/app.js",
                 "resources/css/guest.css",
+                 "resources/css/welcome.css",
+                 "resources/js/welcome.js",
+                 "resources/js/dashboard.js"
             ],
             refresh: true,
         }),
